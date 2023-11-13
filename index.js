@@ -34,12 +34,12 @@ app.use("/admins", adminRouter);
 app.use(checker);
 app.use("/cart", cartRouter);
 
-app.listen(process.env.PORT_NUMBER, async (req, res) => {
+app.listen(process.env.PORT_NUMBER, async () => {
   try {
     await connection;
     console.log("Connected to db");
   } catch (error) {
-    res.status(404).send({ msg: error.message });
+    console.error(error);
   }
   console.log(`connected at the port ${process.env.PORT_NUMBER} `);
 });
