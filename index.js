@@ -34,7 +34,7 @@ app.use("/admins", adminRouter);
 app.use(checker);
 app.use("/cart", cartRouter);
 
-app.listen(process.env.PORT_NUMBER, async () => {
+app.listen(process.env.PORT_NUMBER, async (req, res) => {
   try {
     await connection;
     console.log("Connected to db");
