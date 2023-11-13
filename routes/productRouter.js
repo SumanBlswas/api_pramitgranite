@@ -1,21 +1,21 @@
 import express from "express";
-import { menProductModel } from "../models/menProductModel.js";
+import { productModel } from "../models/productModel.js";
 
-const menProductRouter = express.Router();
+const productRouter = express.Router();
 
-menProductRouter.get("/", async (req, res) => {
+productRouter.get("/", async (req, res) => {
   try {
-    const user = await menProductModel.find();
+    const user = await productModel.find();
     res.status(200).send(user);
   } catch (error) {
     res.status(404).send({ msg: error.message });
   }
 });
 
-menProductRouter.post("/add", async (req, res) => {
+productRouter.post("/add", async (req, res) => {
   const payload = req.body;
   try {
-    const user = new menProductModel(payload);
+    const user = new productModel(payload);
     await user.save();
     res.status(200).send({ msg: "A new product has been added" });
   } catch (error) {
@@ -23,21 +23,21 @@ menProductRouter.post("/add", async (req, res) => {
   }
 });
 
-menProductRouter.patch("/updates/:userID", async (req, res) => {
+productRouter.patch("/updates/:userID", async (req, res) => {
   const payload = req.body;
   const { userID } = req.params;
   try {
-    await menProductModel.findByIdAndUpdate({ _id: userID }, payload);
+    await productModel.findByIdAndUpdate({ _id: userID }, payload);
     res.status(200).send({ msg: `Product with id ${userID} has been updated` });
   } catch (error) {
     res.status(404).send({ msg: error.message });
   }
 });
 
-menProductRouter.delete("/delete/:userID", async (req, res) => {
+productRouter.delete("/delete/:userID", async (req, res) => {
   const { userID } = req.params;
   try {
-    await menProductModel.findByIdAndDelete({ _id: userID });
+    await productModel.findByIdAndDelete({ _id: userID });
     res.status(200).send({ msg: `Product with id ${userID} has been deleted` });
   } catch (error) {
     res.status(404).send({ msg: error.message });
@@ -45,7 +45,7 @@ menProductRouter.delete("/delete/:userID", async (req, res) => {
 });
 
 // for searching and filteration part
-menProductRouter.get("/query", async (req, res) => {
+productRouter.get("/query", async (req, res) => {
   let { brand, title, price, size, category } = req.query;
   try {
     let filter = {};
@@ -64,11 +64,11 @@ menProductRouter.get("/query", async (req, res) => {
     if (category) {
       filter.category = { $regex: category };
     }
-    let user = await menProductModel.find(filter);
+    let user = await productModel.find(filter);
     res.status(200).send(user);
   } catch (error) {
     res.status(404).send({ msg: error.message });
   }
 });
 
-export { menProductRouter };
+export { productRouter };

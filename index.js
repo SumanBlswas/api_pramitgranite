@@ -4,8 +4,8 @@ import cors from "cors";
 import fs from "fs/promises";
 import { connection } from "./config/db.js";
 import { userRouter } from "./routes/userRoutes.js";
-import { menProductRouter } from "./routes/menProductRoutes.js";
-import { womenProductRouter } from "./routes/womenProductRoutes.js";
+import { productRouter } from "./routes/productRouter.js";
+// import { womenProductRouter } from "./routes/womenProductRoutes.js";
 import { checker } from "./middlewares/checker.js";
 import { cartRouter } from "./routes/cartRoutes.js";
 import { adminRouter } from "./routes/adminRoutes.js";
@@ -26,8 +26,8 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/users", userRouter);
-app.use("/menproducts", menProductRouter);
-app.use("/womenproducts", womenProductRouter);
+app.use("/products", productRouter);
+// app.use("/womenproducts", womenProductRouter);
 app.use("/admins", adminRouter);
 app.use(checker);
 app.use("/cart", cartRouter);
