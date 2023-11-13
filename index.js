@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import fs from "fs";
+import fs from "fs/promises";
 import { connection } from "./config/db.js";
 import { userRouter } from "./routes/userRoutes.js";
 import { menProductRouter } from "./routes/menProductRoutes.js";
@@ -9,19 +9,17 @@ import { womenProductRouter } from "./routes/womenProductRoutes.js";
 import { checker } from "./middlewares/checker.js";
 import { cartRouter } from "./routes/cartRoutes.js";
 import { adminRouter } from "./routes/adminRoutes.js";
+
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   try {
-    fs.readFile("./dist/api.html", (err, data) => {
-      res.writeHead(200, { "Content-Type": "text/html" });
-      res.write(data);
-      return res.end();
-    });
+    const data = await fs.readFile("./dist/api.html", "utf-8");
+    res.status(200).send(data);
   } catch (error) {
     res.status(404).send({ msg: error.message });
   }
@@ -41,5 +39,5 @@ app.listen(process.env.PORT_NUMBER, async () => {
   } catch (error) {
     console.error(error);
   }
-  console.log(`connected at the port ${process.env.PORT_NUMBER} `);
+  console.log(`Connected at the port ${process.env.PORT_NUMBER}`);
 });
