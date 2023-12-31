@@ -1,7 +1,9 @@
 import express from "express";
 import { productModel } from "../models/productModel.js";
+import multer from "multer";
 
 const productRouter = express.Router();
+const upload = multer({ dest: "uploads/" });
 
 productRouter.get("/", async (req, res) => {
   try {
@@ -12,8 +14,9 @@ productRouter.get("/", async (req, res) => {
   }
 });
 
-productRouter.post("/add", async (req, res) => {
+productRouter.post("/add", upload.single("image"), async (req, res) => {
   const payload = req.body;
+  payload.image = req.file.path;
   try {
     const user = new productModel(payload);
     await user.save();
