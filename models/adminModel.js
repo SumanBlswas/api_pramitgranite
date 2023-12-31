@@ -8,6 +8,7 @@ const adminSchema = mongoose.Schema({
   password: String,
   position: String,
   img: String,
+  address: String,
 });
 
 const adminModel = mongoose.model("admin", adminSchema);

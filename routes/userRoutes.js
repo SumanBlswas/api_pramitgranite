@@ -48,7 +48,8 @@ userRouter.post("/login", async (req, res) => {
 userRouter.use(validator);
 
 userRouter.post("/register", async (req, res) => {
-  const { name, email, password, age, gender } = req.body;
+  const { name, email, password, age, gender, position, img, address } =
+    req.body;
   try {
     bcrypt.hash(password, 5, async (err, hash) => {
       let user = new userModel({
@@ -57,6 +58,9 @@ userRouter.post("/register", async (req, res) => {
         password: hash,
         age,
         gender,
+        position,
+        img,
+        address,
       });
       await user.save();
       res.status(200).send({ msg: "New user has been added" });
