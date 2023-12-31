@@ -1,5 +1,12 @@
 import express from "express";
 import { productModel } from "../models/productModel.js";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+  cloud_name: "drhiuv347",
+  api_key: "511424721237717",
+  api_secret: "p0NKPrQIiwzuRdQPjKWEWCs68yg",
+});
 
 const productRouter = express.Router();
 
@@ -13,10 +20,28 @@ productRouter.get("/", async (req, res) => {
 });
 
 productRouter.post("/add", async (req, res) => {
-  const payload = req.body;
+  const {
+    img1,
+    brand,
+    title,
+    description,
+    price,
+    size,
+    love_count,
+    rating,
+    category,
+  } = req.body;
+
   try {
-    const user = new productModel(payload);
-    await user.save();
+    cloudinary.v2.uploader.upload(
+      img1,
+      { public_id: "olympic_flag" },
+      function (error, result) {
+        console.log(result);
+      }
+    );
+    // const user = new productModel(payload);
+    // await user.save();
     res.status(200).send({ msg: "A new product has been added" });
   } catch (error) {
     res.status(404).send({ msg: error.message });
