@@ -7,7 +7,7 @@ const adminSchema = mongoose.Schema({
   gender: String,
   password: String,
   position: String,
-  img: String,
+  img: Object,
   address: String,
 });
 

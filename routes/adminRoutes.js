@@ -24,7 +24,7 @@ adminRouter.post("/add", async (req, res) => {
       age,
       gender,
       position,
-      img,
+      img
     });
     await admin.save();
     res.status(200).send({ msg: "New admin has been added" });
