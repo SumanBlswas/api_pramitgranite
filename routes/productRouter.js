@@ -14,6 +14,7 @@ productRouter.get("/", async (req, res) => {
 
 productRouter.post("/add", async (req, res) => {
   const {
+    img1,
     brand,
     title,
     description,
